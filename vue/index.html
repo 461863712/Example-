@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <span v-bind:title="message">qqq</span>
+    <p v-if="seen">现在看到我了</p>
+    <ul>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+    </ul>
+    <p>{{asss}}</p>
+    <button v-on:click="reverseMessage">逆转消息</button>
+
+    <p>{{ message }}</p>
+    <input v-model="message">
+    <zh></zh>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+*{margin: 0;padding: 0;list-style: none;text-decoration: none;}
+.addNoteView{
+    width: 80%;
+    margin: auto;
+}
+.addNoteView input,.addNoteView textarea{
+    display: block;
+    width: 100%;
+}
+.addNoteView input{
+    height: 44px;
+}
+.addNoteView textarea{
+    height: 200px;
+}
+.addNoteView .addButton{
+    width: 100%;
+    margin:30px auto;
+    height: 35px;
+    background-color: green;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    color: #fff;
+}
