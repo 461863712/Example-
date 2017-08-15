@@ -1,0 +1,261 @@
+gulp
+第1天课堂笔记
+Gulp
+Gulp是工程化开发的一个工具
+比如我们在公司开发项目，项目中文件有很多，对于文件依赖关系，打包，压缩，代码检测等等，如果仅仅通过我们人手动的处理是有风险的，但是如果用机器去处理这些事情就能屏蔽这些风险，工程化就是用机器去批量的处理文件，例如对js，css，html压缩，对他们的打包，对es6，typescript，less，sass，style语言的编译
+Gulp是基于流出来的
+例如UNIX中的概念，上一次操作的输出作为下一次操作的输入，比如node中的流
+例如我们压缩一个js
+第一步，通过gulp获取这个文件，并转化成流（文件名，格式，编码，内容）
+第二步，对流的内容进行压缩
+第三步，将压缩的内容重新写回一个新的文件
+获取
+npm install -g gulp
+// mac linux要加上管理员命令
+sudo install -g gulp
+查看是否安装成功，我们可以通过gulp -v查看版本号的形式来检测
+Gulp建议我们使用本地的包，不要全局环境中包
+
+几个网站
+中文网
+http://www.gulpjs.com.cn/
+官网
+http://www.gulpjs.com
+插件库
+http://gulpjs.com/plugins/
+Npm包库
+https://www.npmjs.com/
+
+Gulp项目开发的第一步要当前目录下建立一个gulpfile.js文件，这个就是gulp的入口文件，当我们执行gulp指令的时候，会搜索这个文件是否存在，如果存在会执行该文件里面的任务，
+
+api
+Gulp简单，只有5个api（task，src， pipe， dest， watch） （run）
+Gulp基于任务开发模式，在一个项目，做一件事情就是在完成一项任务，我们可以通过task定义任务
+Task
+Task(name, fn)
+Name 表示任务名称
+Fn 该任务执行函数
+参数是一个函数
+作用域是gulp对象
+因此可以通过this调用其他gulp属性方法
+但是gulp建议我们函数式编程，因此不要使用this调用法，而是用gulp调用方式
+Task(name, [])    
+Name表示任务名称
+[] 表示依赖的其他 任务
+在gulp开发中，跟开发nodejs是一模一样的，
+因此使用gulp就要引入这个模块
+Require(‘gulp’)
+
+run
+Run 启动任务的
+参数表示任务名称
+在新版本中不建议我们用run
+而是用default任务来启动我们的任务
+gulp.task('show', function () {
+    // console.log(arguments)
+    // console.log(this)
+    // 任务就是输出爱创课堂
+    console.log('爱创课堂123')
+})
+// 可以通过run方法执行这个任务
+gulp.run('show')
+gulp.task('default', ['show'])
+
+读写操作
+src
+读文件操作
+参数表示文件的路径
+作用是将文件读取并转化成一个流
+Pipe
+管道方法
+参数是处理事情
+一定要在src获取的文件后面执行
+Dest
+写入文件
+参数表示写入的地址
+作用就是将流转化成一个文件，结束操作
+gulp.task('dealFile', function () {
+    gulp
+        // 第一步获取文件
+        .src('js/demo.js')
+        // 在管道中处理文件
+        .pipe(gulp.dest('demo'))
+})
+
+watch
+文件监听，监听文件变化并做处理
+例如我们在开发中会不停的修改文件，那么当修改完成，我们为了发布，需要再执行一次gulp指令。保存是很频繁的，因此每一次保存执行一次gulp很繁琐，因此gulp提供了一个功能叫watch方法，用来监听文件变化并做相应处理
+改变值得就是保存，删除，创建等
+Watch(path, fn)
+Path监听的文件
+Fn表示文件改变时执行的方法
+参数是一个事件对象
+Type表示更改的方式，changed，added，deleted
+Path表示文件绝对路径
+Watch(path, [])
+Path监听的文件
+[] 文件改变时，执行的任务
+gulp.task('watchJs', function () {
+    // 第一步获取文件
+    gulp
+        .src('js/app.js')
+        // 将文件发布
+        .pipe(gulp.dest('abc'))
+})
+
+Globs语法
+解决问题：一条地址只能匹配一个文件的问题的
+有点类似我们学过的正则，不过globs语法要比正则简单的多，因为他是专门为匹配路径设计的规则
+规则
+* 用来匹配 任意字符串（不包括目录分隔/）
+Js/*.js
+匹配 js/a.js  js/abc.js
+不匹配 js/a/b.js  js/a.css
+** 用来匹配任意字符串（路径及其子路径），
+如果首位有其他字母，他只能用来匹配路径
+Demo/**/*.js =>  demo/a/b/c/de/a.js
+如果后面什么都没有，可以匹配到文件
+Demo/**  =>  demo/ab/c.js
+? 匹配零或一个字符
+Ab?c.js  匹配 Abc.js  Ac.js  不匹配adc.js
+[] 匹配字符集
+a[bcd]ef.js  匹配 abef.js  acef.js  不匹配 abcdef.js  axef.js
+[^] 不匹配的字符集
+a[^bcd]ef.js 匹配 axef.js  不匹配 abef.js
+可以应在上诉5个api中使用path参数的部分
+gulp.task('moveJs', function () {
+    // 获取js
+    gulp
+        .src('js/**/*.js')
+        // .src('js/**')
+        // 发布
+        .pipe(gulp.dest('abc'))
+})
+
+
+插件
+Gulp工具包只实现对文件的获取，发布以及监听，没有对于文件如何处理做说明，所以打包，压缩，重命名等操作没有实现，这些功能被其他人通过插件的方式实现了
+Gulp优势就是轻量级，容易学习，
+        把大量业务放在插件中去实现，因此市面上有好多的插件，
+官方没有定义指定插件，因此我们在实现某一个需求时候，我们要自己去插件库中寻找，如果找不到只能去社区，论坛提问
+
+重命名插件
+Gulp-rename
+安装 （sudo） npm install -g gulp-rename
+使用插件简单
+第一步，引入插件模块
+第二步， 在pipe管道中用插件处理文件
+接收一个参数表示重命名文件的新的名称
+
+gulp.task('renameJs', function () {
+    // 获取文件
+gulp.src('js/app.js')     //导入
+        // 先重命名再发布
+        // 第二步 在管道中处理文件
+        // .pipe(rename('起个名字好难'))
+    .pipe(rename('demo.txt'))    //修改
+        // 发布
+    .pipe(gulp.dest('demo'))    //处理导出
+})
+
+压缩js插件
+Gulp-uglify
+使用方式跟rename很像
+第一步，引入插件模块
+第二步，在pipe管道中处理压缩文件
+gulp.task('uglifyJs', function () {
+    // 获取文件
+    gulp.src('js/*.js')
+    // 在管道中压缩js
+    .pipe(uglify())
+    // 发布文件
+    .pipe(gulp.dest('dest'))
+})
+
+压缩css
+Gulp-minify-css
+第一步 引入插件
+第二步 在管道中压缩css文件
+gulp.task('minifyCss', function () {
+    // 获取文件
+    gulp.src('css/*.css')
+    // 压缩css
+    .pipe(minifyCss())
+    // 发布到dest目录
+    .pipe(gulp.dest('dest'))
+})
+
+压缩html
+Gulp-minify-html
+第一步 引入插件
+第二步 在管道中压缩html
+gulp.task('minifyHTML', function () {
+    // 获取文件
+    gulp.src('index.html')
+    // 压缩
+    .pipe(minifyHtml())
+    // 发布
+    .pipe(gulp.dest('dest'))
+})
+
+Backbone项目实战
+将backbone项目内的内容发不到一个上线环境 demo
+Data目录是接口文件，我们要发布到demo/data
+Img目录是图片文件，我们要发布到demo/img
+Static目录里面有css文件，也有js文件，我们要将他们压缩，发布到demo/static
+Index.html文件 压缩发布到demo/index.html
+App.js 文件 直接发不到demo目录下
+
+在使用globs语法时候，获取文件是，前面固定的目录，在发布时候一定要写全
+gulp
+    .src('12/static/**/*.js')
+    // 压缩
+    .pipe(uglify())
+    .pipe(gulp.dest('demo/static'))
+
+文件打包插件
+Gulp-concat
+使用方式跟rename插件一样
+第一步引入插件
+第二步打包文件（参数表示打包后的文件名称）
+
+gulp.task('concat', function () {
+    // 获取文件
+    gulp
+        .src('js/*.js')
+        // 压缩
+        .pipe(uglify())
+        // 打包
+        .pipe(concat('ab.js'))
+        // 发布
+        .pipe(gulp.dest('js'))
+
+})
+
+Js校验
+Gulp-jslint
+做js规范校验的
+避免我们写的代码产生bug
+第一步引入插件
+第二步打包文件
+gulp.task('jslint', function () {
+    // 校验js目录下所有js文件
+    gulp.src('js/*.js')
+        // 校验
+        .pipe(jslint())
+        .pipe(gulp.dest('dest'))
+})
+
+图片压缩插件
+Gulp-imagemin
+使用方式同上
+Png图片压缩收益最大的
+gulp.task('imagemin', function () {
+    // 获取图片，压缩图片
+    gulp.src('img/*.*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dest'))
+})
+
+v    5
+
