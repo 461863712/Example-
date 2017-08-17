@@ -3,29 +3,29 @@
  */
 (function () {
 
-    var app = new Vue({
+    Vue.component('todo-item', {
+        // todo-item 组件现在接受一个
+        // "prop"，类似于一个自定义属性
+        // 这个属性名为 todo。
+        props: ['todo'],
+        template: '<li>{{ todo.text}}</li>'
+    });
+    var config=new Vue({
         el: '#app',
         data: {
-            message: '页面加载于 ' + new Date(),
+            message: 'Hello Vue!',
             seen:true,
-            todos: [
-                { text: '学习 JavaScript' },
-                { text: '学习 Vue' },
-                { text: '整个牛项目' }
-            ],
-            asss:'Hello Vue.js!'
+            list:[
+                {text:"aaaaaaaa"},
+                {text:"bbbbbbbb"},
+                {text:"cccccccc"}
+            ]
         },
-        components:{"zh":{
-            template:"<div>hello world</div>"
-             }
-
-        },
-
-        methods: {
-            reverseMessage: function () {
-                this.asss = this.asss.split('').reverse().join('')
+        methods:{
+            reverseMessage:function () {
+                console.log(this);
+                this.message=this.message.split("").reverse().join("");
             }
         }
-    })
-
+    });
 })();

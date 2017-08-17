@@ -4,15 +4,20 @@
   "description": "",
   "main": "gulpfile.js",
   "dependencies": {
+    "babel": "^6.23.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.0.0",
     "gulp-htmlmin": "^3.0.0",
+    "gulp-imagemin": "^3.3.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "gulp-babel": "^7.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="vue.js"></script>
+    <script src="js/vue.js"></script>
 </head>
 <body>
 
 <div id="app">
-    <span v-bind:title="message">qqq</span>
-    <p v-if="seen">现在看到我了</p>
+    {{message}}
+    <span v-bind:title="message">aa</span>
+    <span v-if="seen">显示</span>
     <ul>
-        <li v-for="todo in todos">
-            {{ todo.text }}
-        </li>
+        <li v-for="a in list">{{a.text}}</li>
     </ul>
-    <p>{{asss}}</p>
-    <button v-on:click="reverseMessage">逆转消息</button>
-
-    <p>{{ message }}</p>
-    <input v-model="message">
-    <zh></zh>
+    <button v-on:click="reverseMessage">逆转</button>
+    <input type="text" v-model="message">
+    <ol>
+        <!--
+          现在我们为每个 todo-item 提供待办项对象
+          待办项对象是变量，即其内容可以是动态的。
+          我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
+        -->
+        <todo-item
+                v-for="item in list"
+                v-bind:todo="item"
+                v-bind:key="item.id">
+        </todo-item>
+    </ol>
 </div>
 
 <script src="main.js"></script>

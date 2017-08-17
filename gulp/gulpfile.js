@@ -6,8 +6,10 @@ var connect=require("gulp-connect");
 var htmlmin=require("gulp-htmlmin");
 var uglify=require("gulp-uglify");
 var concat=require("gulp-concat");
-var babel=require("gulp-babel");
-var sourcemaps=require("gulp-sourcemaps");
+var imagemin=require("gulp-imagemin");
+// var babel=require("babel");
+// var babelGulp=require("gulp-babel");
+// var sourcemaps=require("gulp-sourcemaps");
 
 gulp.task("sleep",function () {
     console.log("aaa");
@@ -33,10 +35,16 @@ gulp.task("copy-js",function () {
         .pipe(gulp.dest("dist/"))
         .pipe(connect.reload());
 });
+gulp.task("image",function () {
+    return gulp.src("a.jpg")
+        .pipe(imagemin())
+        .pipe(gulp.dest("dist/img/"))
+        .pipe(connect.reload());
+});
 
 //实时监听-刷新
 gulp.task("watch",function () {
-    return gulp.watch("index.html",["copy-html","copy-js","compile.js"]);
+    return gulp.watch("index.html",["copy-html","copy-js","compile.js","image"]);
 });
 //gulp-connect实时更新页面
 gulp.task("server",function () {
