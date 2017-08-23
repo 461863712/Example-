@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <input v-model="message" placeholder="edit me">
+    <p>文本{{ message }}</p>
+
+    <span>多行文本:</span>
+    <p style="white-space: pre-line">{{ message }}</p>
+    <br>
+    <textarea v-model="message" placeholder="add multiple lines"></textarea>
+    <br>
+
+    <!--复选框-->
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+    <span>Checked names: {{ checkedNames }}</span>
+    <br>
+
+    <!--单选框-->
+    <input type="radio" id="one" value="One" v-model="picked">
+    <label for="one">One</label>
+    <input type="radio" id="two" value="Two" v-model="picked">
+    <label for="two">Two</label>
+    <span>Picked: {{ picked }}</span>
+    <br>
+
+    <!--选择列表，下拉列表-->
+    <select v-model="selected">
+        <option disabled value="">请选择</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+    <br>
+
+    <!--修饰符 lazy ，从而转变为在 change 事件中同步-->
+    <input v-model.lazy="msg" >{{msg}}
+    <!--自动将用户的输入值转为 Number 类型,修饰符 number 给 v-model 来处理输入值-->
+    <input v-model.number="age" type="number">{{age}}
+    <!--自动过滤用户输入的首尾空格,trim 修饰符到 v-model 上过滤输入-->
+    <input v-model.trim="msga">{{msga}}
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
