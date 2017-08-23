@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <input v-model="todo" @keyup.enter="addTodo">
+    <input v-model="filterTodo" @keyup.enter="addFilterTodo">
+
+    <ul>
+        <li v-for="item in filterTodos">{{item}}</li>
+    </ul>
+</div>
+
+
+<script src="main.js"></script>
+</body>
+</html>

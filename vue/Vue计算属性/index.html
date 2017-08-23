@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <p>{{message}}</p>
+    <p>{{age}}</p>
+
+    <input type="text" v-model="message">
+    <input type="text" v-model="age">
+    <p>{{reversedMessage }}</p>
+
+
+
+    <div v-if="Math.random() > 0.5">
+        Now you see me
+    </div>
+    <div v-else>
+        Now you don't
+    </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
